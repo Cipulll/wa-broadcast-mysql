@@ -1,3 +1,2 @@
-2026/09/18-13:15:27.573 16c8 Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Session Storage/MANIFEST-000001
-2026/09/18-13:15:27.817 16c8 Recovering log #3
-2026/09/18-13:15:28.360 16c8 Reusing old log C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Session Storage/000003.log 
+2026/09/18-13:53:17.332 2884 Creating DB C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Session Storage since it was missing.
+2026/09/18-13:53:17.462 2884 Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Session Storage/MANIFEST-000001
