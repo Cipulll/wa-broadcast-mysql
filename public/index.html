@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhatsApp Broadcast Dashboard</title>
+    <!-- Mencegah Favicon 404 -->
+    <link rel="shortcut icon" href="#" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen text-gray-800">
+    <!-- Auth Section (Satu Card dengan Tab Toggle) -->
+    <div
+      id="authSection"
+      class="flex items-center justify-center min-h-screen p-4"
+    >
+      <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center text-emerald-600">
+          WA Broadcast System
+        </h2>
+
+        <!-- Tab Switcher -->
+        <div class="flex border-b mb-6">
+          <button
+            id="tabLoginBtn"
+            onclick="switchAuthTab('login')"
+            class="w-1/2 py-2 font-bold text-center border-b-2 border-emerald-600 text-emerald-600 text-sm"
+          >
+            Login
+          </button>
+          <button
+            id="tabRegBtn"
+            onclick="switchAuthTab('register')"
+            class="w-1/2 py-2 font-bold text-center border-b-2 border-transparent text-gray-400 hover:text-gray-600 text-sm"
+          >
+            Register
+          </button>
+        </div>
+
+        <!-- Single Auth Form Body -->
+        <form onsubmit="handleAuthSubmit(event)">
+          <div class="mb-4">
+            <label class="block text-xs font-semibold text-gray-600 mb-1"
+              >Username</label
+            >
+            <input
+              type="text"
+              id="authUsername"
+              placeholder="Masukkan username"
+              required
+              class="w-full p-2.5 border rounded-lg text-sm focus:outline-emerald-500"
+            />
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-xs font-semibold text-gray-600 mb-1"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="authPassword"
+              placeholder="Masukkan password"
+              required
+              class="w-full p-2.5 border rounded-lg text-sm focus:outline-emerald-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            id="authSubmitBtn"
+            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-sm shadow"
+          >
+            Login ke Dashboard
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Section Main Dashboard -->
+    <div id="dashboardSection" class="hidden container mx-auto p-4 md:p-6">
+      <!-- Header -->
+      <div
+        class="flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow"
+      >
+        <div>
+          <h1 class="text-xl font-bold text-emerald-600">WhatsApp Broadcast</h1>
+          <p id="userDisplay" class="text-xs text-gray-500 font-medium"></p>
+        </div>
+        <button
+          onclick="handleLogout()"
+          class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg text-xs font-bold"
+        >
+          Logout
+        </button>
+      </div>
+
+      <input
+        type="file"
+        id="csvFileInput"
+        accept=".csv"
+        onchange="handleImportCSV()"
+        class="hidden"
+      />
+
+      <!-- Status WA & Contact Bar -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-white p-5 rounded-xl shadow">
+          <h3 class="font-bold text-base mb-3">Koneksi WhatsApp</h3>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xs font-medium">Status:</span>
+            <span
+              id="waStatusBadge"
+              class="px-2 py-1 text-xs font-semibold rounded bg-gray-200 text-gray-700"
+              >Checking...</span
+            >
+          </div>
+          <button
+            onclick="checkWAStatus()"
+            class="w-full text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg mb-3 font-semibold"
+          >
+            Refresh Status
+          </button>
+
+          <div
+            id="qrCodeContainer"
+            class="text-center p-3 bg-gray-50 border rounded-lg hidden"
+          >
+            <p class="text-xs text-gray-500 mb-2">
+              Scan QR Code via WhatsApp HP:
+            </p>
+            <img
+              id="qrImage"
+              src=""
+              alt="QR Code WhatsApp"
+              class="mx-auto w-40 h-40 border p-1 bg-white rounded"
+            />
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl shadow md:col-span-2">
+          <h3 class="font-bold text-base mb-3">Kelola Kontak Target</h3>
+          <div class="flex gap-2 mb-4">
+            <input
+              type="text"
+              id="contactName"
+              placeholder="Nama Customer"
+              class="w-full p-2 border rounded-lg text-xs"
+            />
+            <input
+              type="text"
+              id="contactPhone"
+              placeholder="No HP (Contoh: 08123456789)"
+              class="w-full p-2 border rounded-lg text-xs"
+            />
+            <button
+              type="button"
+              onclick="handleAddContact()"
+              class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap"
+            >
+              + Kontak
+            </button>
+          </div>
+          <div class="max-h-36 overflow-y-auto border rounded-lg">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-50 border-b sticky top-0">
+                <tr>
+                  <th class="p-2">Nama</th>
+                  <th class="p-2">Nomor HP</th>
+                  <th class="p-2 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="contactTableBody">
+                <tr>
+                  <td colspan="3" class="p-3 text-center text-gray-400">
+                    Belum ada kontak
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Broadcast Sesuai Mockup -->
+      <div class="bg-white p-6 rounded-xl shadow mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-semibold mb-1">Title</label>
+            <input
+              type="text"
+              id="broadcastTitle"
+              placeholder="Masukkan Judul Campaign"
+              class="w-full p-2.5 border rounded-lg text-sm mb-4"
+            />
+
+            <label class="block text-sm font-semibold mb-1"
+              >Target Customer</label
+            >
+            <div class="flex gap-2 mb-4">
+              <button
+                type="button"
+                class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-xs font-semibold"
+              >
+                List Contact
+              </button>
+              <button
+                type="button"
+                onclick="document.getElementById('csvFileInput').click()"
+                class="border px-4 py-2 rounded-lg text-xs font-semibold"
+              >
+                Import File
+              </button>
+            </div>
+
+            <label class="block text-sm font-semibold mb-1"
+              >Upload Image (Optional)</label
+            >
+            <input
+              type="file"
+              id="broadcastImage"
+              accept="image/*"
+              class="w-full text-xs text-gray-500 mb-4 file:mr-2 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:bg-gray-100"
+            />
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="text-sm font-semibold">Message</label>
+              <button
+                type="button"
+                onclick="insertVariable('{name}')"
+                class="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded font-semibold"
+              >
+                + {name}
+              </button>
+            </div>
+            <textarea
+              id="broadcastMessage"
+              rows="6"
+              placeholder="Tulis pesan broadcast..."
+              class="w-full p-2.5 border rounded-lg text-sm mb-4"
+            ></textarea>
+
+            <button
+              type="button"
+              onclick="handleSendBroadcast()"
+              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-bold text-sm shadow"
+            >
+              🚀 Send Broadcast
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid Card Riwayat Broadcast -->
+      <div class="mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold text-lg">Broadcast History</h3>
+          <input
+            type="text"
+            id="searchHistory"
+            onkeyup="filterHistory()"
+            placeholder="Search..."
+            class="p-2 border rounded-lg text-xs w-48"
+          />
+        </div>
+        <div
+          id="historyGrid"
+          class="grid grid-cols-1 md:grid-cols-3 gap-4"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Modal Detail Broadcast Logs -->
+    <div
+      id="detailModal"
+      class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50"
+    >
+      <div
+        class="bg-white rounded-xl max-w-3xl w-full p-6 max-h-[80vh] overflow-y-auto"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold text-lg" id="modalTitle">
+            Detail Broadcast Progress
+          </h3>
+          <button
+            type="button"
+            onclick="closeModal()"
+            class="text-gray-400 hover:text-gray-600 font-bold"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="flex justify-between mb-4">
+          <span
+            id="modalStats"
+            class="text-sm font-semibold text-gray-600"
+          ></span>
+          <button
+            type="button"
+            onclick="handleRetryFailed()"
+            class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded text-xs font-semibold"
+          >
+            Retry All Failed
+          </button>
+        </div>
+        <table class="w-full text-left text-xs border">
+          <thead class="bg-gray-50 border-b">
+            <tr>
+              <th class="p-2">Customer Name</th>
+              <th class="p-2">Phone</th>
+              <th class="p-2">Sent Date</th>
+              <th class="p-2">Status</th>
+              <th class="p-2">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody id="modalLogsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
