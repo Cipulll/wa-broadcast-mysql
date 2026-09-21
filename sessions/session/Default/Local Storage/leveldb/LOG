@@ -1,3 +1,2 @@
-2026/09/18-13:57:21.186 1314 Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Local Storage\leveldb/MANIFEST-000001
-2026/09/18-13:57:21.209 1314 Recovering log #3
-2026/09/18-13:57:21.233 1314 Reusing old log C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Local Storage\leveldb/000003.log 
+2026/09/21-15:40:07.015 2634 Creating DB C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Local Storage\leveldb since it was missing.
+2026/09/21-15:40:07.098 2634 Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Local Storage\leveldb/MANIFEST-000001

@@ -1,3 +1,2 @@
-2026/09/18-13:57:20.611 2f2c Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Extension State/MANIFEST-000001
-2026/09/18-13:57:20.612 2f2c Recovering log #3
-2026/09/18-13:57:20.613 2f2c Reusing old log C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Extension State/000003.log 
+2026/09/21-15:40:04.887 2790 Creating DB C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Extension State since it was missing.
+2026/09/21-15:40:04.909 2790 Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Extension State/MANIFEST-000001

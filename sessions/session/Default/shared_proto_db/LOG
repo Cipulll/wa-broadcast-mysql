@@ -1,3 +1,2 @@
-2026/09/18-13:57:20.627 3090 Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\shared_proto_db/MANIFEST-000001
-2026/09/18-13:57:20.628 3090 Recovering log #3
-2026/09/18-13:57:20.628 3090 Reusing old log C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\shared_proto_db/000003.log 
+2026/09/21-15:40:05.464 1c3c Creating DB C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\shared_proto_db since it was missing.
+2026/09/21-15:40:05.480 1c3c Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\shared_proto_db/MANIFEST-000001

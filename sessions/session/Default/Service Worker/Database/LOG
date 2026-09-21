@@ -1,3 +1,2 @@
-2026/09/18-13:57:20.231 1c70 Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Service Worker\Database/MANIFEST-000001
-2026/09/18-13:57:20.232 1c70 Recovering log #3
-2026/09/18-13:57:20.232 1c70 Reusing old log C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Service Worker\Database/000003.log 
+2026/09/21-15:40:19.483 11d0 Creating DB C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Service Worker\Database since it was missing.
+2026/09/21-15:40:19.509 11d0 Reusing MANIFEST C:\xampp\htdocs\wa-broadcast-mysql\sessions\session\Default\Service Worker\Database/MANIFEST-000001
